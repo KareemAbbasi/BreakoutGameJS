@@ -38,6 +38,8 @@
         var brickOffsetTop = 30;
         var brickOffsetLeft = 30;
 
+        var lives = 3;
+
         var score = 0;
 
         var bricks = [];
@@ -88,6 +90,12 @@
             ctx.fillText("Score: "+ score, 8, 20);
         }
 
+        function drawLives() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#0095DD";
+            ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+        }
+
         function collisionDetection() {
             for (var c = 0; c < brickColumnCount; c++) {
                 for (var r = 0; r < brickRowCount; r++) {
@@ -97,6 +105,10 @@
                             dy = -dy;
                             b.status = 0;
                             score++;
+                            if (score == brickRowCount*brickColumnCount) {
+                                alert("YOU WIN, CONGRATULATIONS!");
+                                document.location.reload();
+                            }
                         }
                     }
                 }
@@ -111,6 +123,7 @@
             drawBricks();
             collisionDetection();
             drawScore();
+            drawLives();
 
             if (x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
                 dx = -dx;
@@ -122,9 +135,18 @@
                 if (x > paddleX && x < paddleX + paddleWidth) {
                     dy = -dy;
                 } else {
-                    alert("GAME OVER");
-                    document.location.reload();
-                    clearInterval(interval);
+                    lives--;
+                    if (!lives) {
+                        alert("GAME OVER");
+                        document.location.reload();
+                    } else {
+                        x = canvas.width/2;
+                        y = canvas.height-30;
+                        dx = 2;
+                        dy = -2;
+                        paddleX = (canvas.width-paddleWidth) / 2;
+                    }
+                    
                 }
             }
 
@@ -142,6 +164,7 @@
 
             x += dx;
             y += dy;
+            requestAnimationFrame(draw);
         }
 
         function keyDownHandler(e) {
@@ -160,10 +183,17 @@
             }
         }
 
+        function mouseMoveHandler(e) {
+            var relativeX = e.clientX - canvas.offsetLeft;
+            if (relativeX > 0 && relativeX < canvas.width) {
+                paddleX = relativeX - paddleWidth/2;
+            }
+        }
+
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
-        var interval = setInterval(draw, 10);
-        
+        document.addEventListener("mousemove", mouseMoveHandler, false);
+        draw();        
     </script>
     
 </body>
