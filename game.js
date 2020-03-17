@@ -151,6 +151,31 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
+var ballX = 360;
+var ballY = 175;
+var ballDY = -1;
+
+function drawMainScreen() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Welcome to the", 40, 145);
+    ctx.fillText("Breakout Game", 40, 175);
+
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, ballRadius, 0, Math.PI*2);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+
+    ballY += ballDY;
+
+    if (ballY < 125 || ballY > 185) {
+        ballDY = -ballDY;
+    }
+    requestAnimationFrame(drawMainScreen);
+}
+
 function keyDownHandler(e) {
     if (e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = true;
@@ -177,4 +202,5 @@ function mouseMoveHandler(e) {
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
-draw();        
+// draw();   
+drawMainScreen();     

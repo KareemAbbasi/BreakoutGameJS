@@ -7,11 +7,57 @@
     <style>
         * {padding: 0; margin: 0;}
         canvas {background: #eee; display: block; margin: 0 auto;}
+
+        h1 {
+            background: #0095DD;
+            color: aliceblue;
+            text-align: center;
+            padding: 20px ;
+            margin-bottom: 10px;
+        }
+
+        #game-buttons {
+            text-align: center;
+            margin: 0 auto 10px auto;
+            width: 480px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            align-items: center;
+        } 
+
+        #game-buttons button{
+            height: 30px;
+            flex-grow: 1;
+            margin: auto 5px auto 5px;
+        }
+
+        #game-buttons :first-child {
+            margin-left: 0;
+        }
+
+        #game-buttons :last-child {
+            margin-right: 0;
+        }
+
     </style>
 </head>
 <body>
+    <h1>Breakout Game</h1>
 
-    <canvas id="myCanvas" width="480" height="320"></canvas>
+    <div id="game-buttons">
+        <button>Start Game</button>
+        <button>Reset</button>
+        <button>Main Menu</button>
+    </div>
+
+    <div id="game-canvas">
+        <canvas id="myCanvas" width="480" height="320"></canvas>
+        <button style="position: absolute;">Hello</button>
+    </div>  
+
+
 
     <script src="game.js"></script>
     
